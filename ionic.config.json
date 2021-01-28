@@ -1,0 +1,7 @@
+{
+  "name": "tRex",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
