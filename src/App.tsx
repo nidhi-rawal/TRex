@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
   IonApp,
-  IonButton,
   IonContent,
   IonHeader,
-  IonItem,
-  IonList,
-  IonMenu,
-  IonPage,
   IonRouterOutlet,
   IonSpinner,
-  IonSplitPane,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -31,7 +25,7 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
-import { getCurrentUser, logout } from "./firebaseConfig";
+import { getCurrentUser } from "./firebaseConfig";
 
 /* Theme variables */
 import "./theme/variables.css";
@@ -90,7 +84,7 @@ const App: React.FC = () => {
             </IonRouterOutlet>
           </IonReactRouter>
         )}
-        {loggedIn && <Landing></Landing>}
+        {/* {loggedIn && <Landing></Landing>} */}
       </IonContent>
     </IonApp>
   );

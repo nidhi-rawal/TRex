@@ -1,28 +1,23 @@
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonItem,
   IonLabel,
-  IonList,
   IonMenu,
-  IonRouterOutlet,
+  IonMenuToggle,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
 import React from "react";
-import { Route, useHistory, withRouter } from "react-router";
+import { useHistory, withRouter } from "react-router";
 import { logout } from "../firebaseConfig";
-import Dashboard from "./Dashboard";
 import "./TrexMenu.css";
 
 const TrexMenu: React.FC = () => {
   const history = useHistory();
   async function logingout() {
     await logout();
-    window.history.replaceState({}, "", "/loginUser");
-    // setLoggedIn(false);
+    history.push("./loginUser");
   }
   return (
     <IonMenu side="start" menuId="menu" contentId="main">
@@ -32,12 +27,16 @@ const TrexMenu: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonItem href="./dashboard">
-          <IonLabel>Dashboard</IonLabel>
-        </IonItem>
-        <IonItem onClick={logingout} button>
-          <IonLabel>Logout</IonLabel>
-        </IonItem>
+        <IonMenuToggle autoHide={false}>
+          <IonItem routerLink="./dashboard">
+            <IonLabel>Dashboard</IonLabel>
+          </IonItem>
+        </IonMenuToggle>
+        <IonMenuToggle autoHide={false}>
+          <IonItem onClick={logingout} button>
+            <IonLabel>Logout</IonLabel>
+          </IonItem>
+        </IonMenuToggle>
       </IonContent>
     </IonMenu>
   );

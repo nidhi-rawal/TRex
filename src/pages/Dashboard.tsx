@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  IonBadge,
-  IonButton,
   IonContent,
   IonHeader,
-  IonIcon,
   IonLabel,
   IonPage,
   IonRouterOutlet,
@@ -15,10 +12,8 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import "./Dashboard.css";
-import { logout } from "../firebaseConfig";
 import { Redirect, Route } from "react-router";
 import { IonReactRouter } from "@ionic/react-router";
-import { calendar, informationCircle, personCircle } from "ionicons/icons";
 import ToyClub from "./ToyClub";
 import BookClub from "./BookClub";
 import DesignerClub from "./DesignerClub";
