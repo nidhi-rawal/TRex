@@ -5,6 +5,7 @@ import {
   IonHeader,
   IonRouterOutlet,
   IonSpinner,
+  IonSplitPane,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -29,12 +30,13 @@ import { getCurrentUser } from "./firebaseConfig";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import RegisterUser from "./pages/RegisterUser";
 import { IonReactRouter } from "@ionic/react-router";
 import { useDispatch } from "react-redux";
 import { setUserState } from "./redux/actions";
-import Landing from "./pages/Landing";
+import TrexMenu from "./components/TrexMenu";
+import Dashboard from "./pages/Dashboard";
 
 const App: React.FC = () => {
   const [busy, setBusy] = useState(true);
@@ -45,7 +47,7 @@ const App: React.FC = () => {
     getCurrentUser().then((user: any) => {
       if (user) {
         dispatch(setUserState(user.email));
-        window.history.replaceState({}, "", "/landing");
+        window.history.replaceState({}, "", "/dashboard");
         setLoggedIn(true);
       } else {
         window.history.replaceState({}, "", "/");
@@ -66,25 +68,36 @@ const App: React.FC = () => {
         {busy ? (
           <IonSpinner></IonSpinner>
         ) : (
-          <IonReactRouter>
-            <IonRouterOutlet>
-              {!loggedIn ? (
-                <>
-                  <Route path="/loginUser" component={LoginUser}></Route>
-                  <Route path="/registerUser" component={RegisterUser}></Route>
-                  <Route
-                    exact
-                    path="/"
-                    render={() => <Redirect to="/loginUser"></Redirect>}
-                  ></Route>
-                </>
+          
+              !loggedIn ? (
+                <IonReactRouter>
+                  <IonRouterOutlet>
+                    <>
+                      <Route path="/loginUser" component={LoginUser}></Route>
+                      <Route path="/registerUser" component={RegisterUser}></Route>
+                      <Route
+                        exact
+                        path="/"
+                        render={() => <Redirect to="/loginUser"></Redirect>}
+                      ></Route>
+                    </>
+                    </IonRouterOutlet>
+              </IonReactRouter>
               ) : (
-                <Route path="/landing" component={Landing}></Route>
-              )}
-            </IonRouterOutlet>
-          </IonReactRouter>
+                <IonReactRouter>
+                  <IonSplitPane contentId="main">
+                    <TrexMenu></TrexMenu>
+                    <IonRouterOutlet id="main">
+                      <Switch>
+                        <Route path="/dashboard" component={Dashboard}></Route> 
+                      </Switch>
+                    </IonRouterOutlet>
+                  </IonSplitPane>
+                  <Route path="/loginUser" component={LoginUser}></Route> 
+              </IonReactRouter>
+              )
+            
         )}
-        {/* {loggedIn && <Landing></Landing>} */}
       </IonContent>
     </IonApp>
   );
